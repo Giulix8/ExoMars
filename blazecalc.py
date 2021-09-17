@@ -17,7 +17,7 @@ aotfgc  = [ 1.07865793e-07, -7.20862528e-04,  1.24871556e+00] # Gaussian peak in
 cfaotf  = np.array([1.34082e-7, 0.1497089, 305.0604])         # Frequency of AOTF [cm-1 from kHz]
 cfpixel = np.array([1.75128E-08, 5.55953E-04, 2.24734E+01])   # Blaze free-spectral-range (FSR) [cm-1 from pixel]
 ncoeff  = [-1.76520810e-07, -2.26677449e-05, -1.93885521e-04] # Relative frequency shift coefficients [shift/frequency from Celsius]
-blazep  = [-5.76161e-14,-2.01122e-10,2.02312e-06,2.25875e+01] # Dependence of blazew from AOTF frequency
+blazep  = [-1.53138e-11,-9.96447e-09,1.23552e-05,2.25879e+01] # Dependence of blazew from AOTF frequency
 aotfts  = -6.5278e-5                                          # AOTF frequency shift due to temperature [relative cm-1 from Celsius]
 norder  = 6                                                   # Number of +/- orders to be considered in order-addition
 
@@ -28,7 +28,7 @@ tempa = -3.0    # Temperature for the AOTF [C]
 
 # Calculate blaze parameters
 aotff = np.polyval(cfaotf, aotf) + tempa*aotfts  # AOTF frequency [cm-1], temperature corrected
-blazew =  np.polyval(blazep,aotf-22000.0)        # FSR (Free Spectral Range), blaze width [cm-1]
+blazew =  np.polyval(blazep,aotff-3700.0)        # FSR (Free Spectral Range), blaze width [cm-1]
 blazew += blazew*np.polyval(ncoeff,tempg)        # FSR, corrected for temperature
 order = round(aotff/blazew)                      # Grating order
 blazef = order*blazew                            # Center of the blaze
